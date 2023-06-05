@@ -7,7 +7,7 @@ namespace Gestform.Tests.Unit
     public class ProgramTests
     {
         [Fact]
-        public void RandomIntegersInList_ListWithCorrectNumberOfIntegers()
+        public void RandomIntegersInList_WhenNumberElementGiven_ThenListWithCorrectNumberOfIntegers()
         {
             // Arrange
             int n = 4;
@@ -40,7 +40,7 @@ namespace Gestform.Tests.Unit
         }
 
         [Fact]
-        public void GetDisplayValues_ListWithPositiveAndNegativeNumbers()
+        public void GetDisplayValues_WhenListWithPositiveAndNegativeNumbers_ThenReturnsCorrect()
         {
             // Arrange
             var numbers = new List<int>() { -12, 0, 25, -10, -8 };
@@ -50,19 +50,22 @@ namespace Gestform.Tests.Unit
             listEqualValue.Add(new DisplayValueModel(25, "Forme"));
             listEqualValue.Add(new DisplayValueModel(-10, "Forme"));
             listEqualValue.Add(new DisplayValueModel(-8, "-8"));
+            var listOne = listEqualValue.OrderBy(e => e.Value).ToList();
 
             // Act
             var result = Program.GetDisplayValues(numbers);
+            var listTwo = result.OrderBy(e => e.Value).ToList();
+
 
             //Assert
-            for(int i = 0; i < result.Count; i++)
+            for (int i = 0; i < result.Count(); i++)
             {
-                Assert.Equal(result[i].Text, listEqualValue[i].Text);
+                Assert.Equal(listOne[i].Text, listTwo[i].Text);
             }
         }
 
         [Fact]
-        public void GetTextByNumber_NumDivisibleBy3And5()
+        public void GetTextByNumber_WhenNumDivisibleBy3And5_ThenReturnsGestform()
         {
             //Assign
             int num = 15;
@@ -75,7 +78,7 @@ namespace Gestform.Tests.Unit
         }
 
         [Fact]
-        public void GetTextByNumber_NumDivisibleBy3()
+        public void GetTextByNumber_WhenNumDivisibleBy3_ThenReturnsGeste()
         {
             //Assign
             int num = 9;
@@ -88,7 +91,7 @@ namespace Gestform.Tests.Unit
         }
 
         [Fact]
-        public void GetTextByNumber_NumDivisibleBy5()
+        public void GetTextByNumber_WhenNumDivisibleBy5_ThenReturnsForme()
         {
             //Assign
             int num = -5;
@@ -101,7 +104,7 @@ namespace Gestform.Tests.Unit
         }
 
         [Fact]
-        public void GetTextByNumber_NumNotDivisibleBy5Or3()
+        public void GetTextByNumber_WhenNumNotDivisibleBy5Or3_ThenReturnsNumber()
         {
             //Assign
             int num = 4;

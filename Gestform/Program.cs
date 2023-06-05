@@ -1,4 +1,5 @@
 ﻿using Gestform.Models;
+using System.Collections.Concurrent;
 
 namespace Gestform
 {
@@ -29,13 +30,14 @@ namespace Gestform
                 throw new ArgumentNullException("Numbers can't be null");
             }
 
-            var result = new List<DisplayValueModel>();
-            foreach (int number in numbers)
-            {
-                result.Add(new DisplayValueModel(number, GetTextByNumber(number)));
-            }
+            var result = new ConcurrentBag<DisplayValueModel>();
 
-            return result;
+            Parallel.ForEach(numbers, currentNumber =>
+            {
+                result.Add(new DisplayValueModel(currentNumber, GetTextByNumber(currentNumber)));
+            });
+
+            return result.ToList();
         }
 
         /// <summary>
